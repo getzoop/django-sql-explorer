@@ -149,7 +149,7 @@ def get_s3_bucket():
     
     conn = S3Connection(app_settings.S3_ACCESS_KEY,
                         app_settings.S3_SECRET_KEY,
-                        region_name=app_settings.S3_REGION_NAME)
+                        host=app_settings.S3_HOST or S3Connection.DefaultHost)
     return conn.get_bucket(app_settings.S3_BUCKET)
 
 
