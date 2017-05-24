@@ -145,12 +145,15 @@ def noop_decorator(f):
 
 
 def get_s3_bucket():
-    from boto.s3.connection import S3Connection
+    from boto.s3.connection import S3Connection, connect_to_region
     
     host = app_settings.S3_HOST or S3Connection.DefaultHost
-    conn = S3Connection(app_settings.S3_ACCESS_KEY,
-                        app_settings.S3_SECRET_KEY,
-                        host=host)
+    region_name = app_settings.S3_REGION_NAME or 'us-east-1'
+
+    conn = connect_to_region(region_name, 
+        aws_access_key_id=app_settings.S3_ACCESS_KEY,
+        aws_secret_access_key=app_settings.S3_SECRET_KEY,
+        host=host)
     return conn.get_bucket(app_settings.S3_BUCKET, validate=False)
 
 
