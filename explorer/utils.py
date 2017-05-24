@@ -151,7 +151,7 @@ def get_s3_bucket():
     conn = S3Connection(app_settings.S3_ACCESS_KEY,
                         app_settings.S3_SECRET_KEY,
                         host=host)
-    return conn.get_bucket(app_settings.S3_BUCKET)
+    return conn.get_bucket(app_settings.S3_BUCKET, validate=False)
 
 
 def s3_upload(key, data):
