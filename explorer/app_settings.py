@@ -43,12 +43,14 @@ EXPLORER_DATA_EXPORTERS = getattr(settings, 'EXPLORER_DATA_EXPORTERS', [
 
 ])
 
+EXPLORER_QUERY_LAZY_OPEN = getattr(settings, 'EXPLORER_QUERY_LAZY_OPEN', False)
+
 EXPLORER_SCHEMA_BUILDERS = getattr(settings, 'EXPLORER_SCHEMA_BUILDERS', [
     ('sqlite', 'explorer.schema.SQLiteSchema'),
     ('postgresql', 'explorer.schema.PostgreSQLSchema'),
     ('mysql', 'explorer.schema.MySQLSchema')
 ])
-   
+
 if sys.version_info[0] < 3:
     try:
         # Add pdf export iff python version < 3 and django-xhtml2pdf is installed
