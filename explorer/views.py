@@ -321,13 +321,12 @@ class QueryView(PermissionRequiredMixin, ExplorerContextMixin, View):
             return HttpResponseRedirect(
                 reverse_lazy('query_detail', kwargs={'query_id': query_id})
             )
-        show = url_get_show(request)
         query, form = QueryView.get_instance_and_form(request, query_id)
         success = form.is_valid() and form.save()
         vm = query_viewmodel(request.user,
                              query,
                              form=form,
-                             run_query=show,
+                             run_query=True,
                              rows=url_get_rows(request),
                              message="Query saved." if success else None)
         return self.render_template('explorer/query.html', vm)
