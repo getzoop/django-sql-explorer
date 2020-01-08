@@ -306,9 +306,10 @@ class QueryView(PermissionRequiredMixin, ExplorerContextMixin, View):
     permission_required = 'view_permission'
 
     def get(self, request, query_id):
-        query, form = QueryView.get_instance_and_form(request, query_id)
-        query.save()  # updates the modified date
         show = url_get_show(request)
+        query, form = QueryView.get_instance_and_form(request, query_id)
+        if show:
+            query.save()  # updates the modified date
         rows = url_get_rows(request)
         vm = query_viewmodel(request.user, query, form=form, run_query=show, rows=rows)
         fullscreen = url_get_fullscreen(request)
