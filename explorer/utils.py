@@ -115,7 +115,7 @@ def url_get_log_id(request):
 
 
 def url_get_show(request):
-    return bool(get_int_from_request(request, 'show', 1))
+    return bool(get_int_from_request(request, 'show', not app_settings.EXPLORER_QUERY_LAZY_OPEN))
 
 
 def url_get_fullscreen(request):
@@ -147,11 +147,11 @@ def noop_decorator(f):
 def get_s3_bucket():
     import boto.s3
     import boto.s3.connection
-    
+
     host = app_settings.S3_HOST or boto.s3.connection.S3Connection.DefaultHost
     region_name = app_settings.S3_REGION_NAME or 'us-east-1'
 
-    conn = boto.s3.connect_to_region(region_name, 
+    conn = boto.s3.connect_to_region(region_name,
         aws_access_key_id=app_settings.S3_ACCESS_KEY,
         aws_secret_access_key=app_settings.S3_SECRET_KEY,
         host=host)
