@@ -279,11 +279,10 @@ class PlayQueryView(PermissionRequiredMixin, ExplorerContextMixin, View):
 
     def post(self, request):
         sql = request.POST.get('sql')
-        show = url_get_show(request)
         query = Query(sql=sql, title="Playground")
         passes_blacklist, failing_words = query.passes_blacklist()
         error = MSG_FAILED_BLACKLIST % ', '.join(failing_words) if not passes_blacklist else None
-        run_query = not bool(error) if show else False
+        run_query = not bool(error)
         return self.render_with_sql(request, query, run_query=run_query, error=error)
 
     def render(self):
